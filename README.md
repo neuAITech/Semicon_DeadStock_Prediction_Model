@@ -1,0 +1,2 @@
+# Semicon_DeadStock_Prediction_Model
+Semicon_DeadStock_Prediction_Model by Kanishk
