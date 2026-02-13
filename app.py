@@ -17,7 +17,7 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
     try:
-        return joblib.load('semiconductor_dead_stock_model_v1.pkl')
+        return joblib.load('models/semiconductor_dead_stock_model_v1.pkl')
     except FileNotFoundError:
         st.error("⚠️ Model file not found! Please run the training script first to generate 'semiconductor_dead_stock_model_v1.pkl'.")
         return None
