@@ -1,6 +1,3 @@
-This README is tailored specifically to the Streamlit application code you provided. It highlights the predictive nature of the tool, the feature engineering involved, and the semiconductor-specific context.
-
----
 
 # 🛡️ Semiconductor Dead Stock Predictor
 
