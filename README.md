@@ -1,86 +1,85 @@
-# Semiconductor Dead Stock Risk Predictor
+This README is tailored specifically to the Streamlit application code you provided. It highlights the predictive nature of the tool, the feature engineering involved, and the semiconductor-specific context.
 
-## 📌 Project Overview
-This project implements a Machine Learning pipeline to identify "Dead Stock" (inventory at high risk of obsolescence) within a semiconductor supply chain.
+---
 
-By integrating **Sales Orders, Customer Forecasts, and Purchase Orders** into a unified "Spine" dataset, the model predicts inventory write-off risks using an **XGBoost Classifier**. It features domain-specific feature engineering (based on JEDEC standards) and utilizes **SHAP (SHapley Additive exPlanations)** to provide transparent, interpretable reasons for every risk flag.
+# 🛡️ Semiconductor Dead Stock Predictor
 
-## 🚀 Key Features
-* **Unified Data Spine:** Merges disparate transaction logs (Sales, POs, Forecasts) into a single timeline.
-* **Automated Risk Tagging:** Rule-based logic to identify current Zombie Stock, Financial Write-offs, and Shelf-Life Expiries.
-* **Semiconductor Feature Engineering:** Calculates specialized metrics like `Life_Consumed_Ratio`, `Cash_Conversion_Gap`, and `Stock_to_Target_Ratio`.
-* **Leakage-Free Modeling:** Rigorous feature selection to remove target leakage before training.
-* **Explainable AI:** Generates global and local SHAP plots to explain *why* specific SKUs are risky.
+An AI-powered inventory risk management tool designed to predict the probability of semiconductor components becoming **Dead Stock**. By analyzing aging, sourcing patterns, and manufacturer reliability, this application provides actionable insights for procurement and warehouse teams.
 
-## 🛠️ Prerequisites
-* **Python 3.8+**
-* **Input Data:** An Excel file (`.xlsx`) containing the following sheets:
-    * `Product_Master`
-    * `Inventory_Lot_Master`
-    * `Customer_Master`
-    * `Customer_Forecast`
-    * `Sales_Order`
-    * `Purchase_Order`
+## 🚀 Overview
 
-## 📦 Installation
+In the semiconductor industry, inventory stagnation can lead to massive financial write-offs due to rapid technological obsolescence and strict expiry dates. This tool uses a trained **XGBoost machine learning model** to evaluate individual SKUs and categorize them by risk level.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/your-username/semiconductor-risk-prediction.git](https://github.com/your-username/semiconductor-risk-prediction.git)
-    cd semiconductor-risk-prediction
-    ```
+### Key Features
 
-2.  **Create a virtual environment (Optional but Recommended):**
-    ```bash
-    python -m venv venv
-    # Windows
-    venv\Scripts\activate
-    # Mac/Linux
-    source venv/bin/activate
-    ```
+* **Real-time Risk Analysis:** Instant probability scoring for stock items.
+* **Feature Engineering:** Automatically calculates critical metrics like *Life Consumed Ratio* and *Aging Criticality*.
+* **Financial Exposure Tracking:** Calculates total value at risk based on unit cost and quantity.
+* **Actionable Recommendations:** Suggests liquidation or monitoring strategies based on the risk score.
 
-3.  **Install dependencies:**
-    Create a `requirements.txt` file (see below) or install packages manually:
-    ```bash
-    pip install pandas numpy matplotlib seaborn scikit-learn xgboost shap openpyxl joblib
-    ```
+---
 
-## ⚙️ Configuration
-**Crucial Step:** Before running the script, you must update the file path to point to your local dataset.
+## 🛠️ Technical Stack
 
-1.  Open `train_model.py` (or whatever you named your script).
-2.  Locate the variable `path` near the top of the file:
-    ```python
-    # UPDATE THIS LINE
-    path = '/Users/kanishkbhagat/DS/Semiconductors/India_Semiconductor_Distributor_v3_10000.xlsx'
-    ```
-3.  Change it to the actual location of your Excel file.
+* **Frontend:** [Streamlit](https://streamlit.io/) (Interactive Web UI)
+* **Machine Learning:** XGBoost (Gradient Boosted Decision Trees)
+* **Data Handling:** Pandas & NumPy
+* **Model Serialization:** Joblib
 
-## 🏃‍♂️ How to Run
+---
 
-1.  **Execute the script:**
-    Run the Python script from your terminal:
-    ```bash
-    python train_model.py
-    ```
+## 📦 Installation & Setup
 
-2.  **During Execution:**
-    * The script will print data processing stats (Row counts, Data types).
-    * It will display the **Feature Importance Plot** (Close the plot window to continue the script).
-    * It will display **SHAP Summary & Force Plots** (Close the plot windows to finish execution).
+1. **Clone the Repository:**
+```bash
+git clone https://github.com/your-username/semiconductor-dead-stock.git
+cd semiconductor-dead-stock
 
-3.  **Output:**
-    * **Console:** Prints Classification Report (Precision/Recall), AUC Score, and top risk factors.
-    * **File:** Saves the trained model as `semiconductor_dead_stock_model_v1.pkl` in the current directory.
+```
 
-## 📊 Model Outputs
-The script generates the following artifacts:
 
-| Artifact | Description |
-| :--- | :--- |
-| **Console Report** | Accuracy metrics, Confusion Matrix, and Data Health stats. |
-| **Feature Importance Plot** | Visual ranking of which features (e.g., `Age`, `Cost`) drive the model. |
-| **SHAP Force Plot** | Interactive visualization explaining the risk score for specific items. |
-| **.pkl File** | The serialized XGBoost model ready for production deployment. |
+2. **Install Dependencies:**
+```bash
+pip install streamlit pandas numpy joblib xgboost
 
-## 📂 Project Structure
+```
+
+
+3. **Model Placement:**
+Ensure your trained model file `semiconductor_dead_stock_model_v1.pkl` is in the root directory.
+4. **Run the App:**
+```bash
+streamlit run app.py
+
+```
+
+
+
+---
+
+## 🧠 How It Works
+
+The application transforms simple user inputs into complex features that the AI model understands:
+
+| Input Field | Engineered Feature | Why it Matters |
+| --- | --- | --- |
+| **Dates** | `Life_Consumed_Ratio` | Measures how much of the product's shelf life has already passed. |
+| **Expiry** | `Is_Aging_Critical` | Boolean flag triggered if the item expires in less than 180 days. |
+| **Source** | `Source_Type_Sales Order` | Identifies if the stock is a return, which historically has higher dead-stock risk. |
+| **Cost/Qty** | `Total_Inventory_Value` | Weighs the financial impact of the prediction. |
+
+---
+
+## 📊 Risk Categories
+
+* 🔴 **High Risk (>65%):** Items requiring immediate liquidation or bundling.
+* 🟡 **Moderate Risk (35% - 65%):** Items showing signs of stagnation; re-ordering should be paused.
+* 🟢 **Safe Stock (<35%):** Healthy inventory levels; normal procurement applies.
+
+---
+
+## 📝 Author
+
+**Kanishk** *AI Engineer*
+
+---
