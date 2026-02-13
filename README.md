@@ -77,6 +77,6 @@ The application transforms simple user inputs into complex features that the AI 
 
 ## 📝 Author
 
-**Kanishk** *AI Engineer*
+**Kanishk Bhagat** *AI Engineer*
 
 ---
