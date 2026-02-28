@@ -37,7 +37,7 @@ cd semiconductor-dead-stock
 
 2. **Install Dependencies:**
 ```bash
-pip install streamlit pandas numpy joblib xgboost
+pip install -r requirements.txt
 
 ```
 
